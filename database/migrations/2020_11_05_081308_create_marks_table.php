@@ -27,9 +27,9 @@ class CreateMarksTable extends Migration
                 ->references('id')
                 ->on('mark_types');
 
-            $table->unsignedBigInteger('model_id');
-            $table->string('model_type');
-            $table->index(['model_id', 'model_type']);
+            $table->unsignedBigInteger('markable_id');
+            $table->string('markable_type');
+            $table->index(['markable_id', 'markable_type']);
 
             $table->timestamps();
         });

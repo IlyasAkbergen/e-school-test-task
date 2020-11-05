@@ -9,6 +9,8 @@ class Homework extends Model
 {
     use HasFactory;
 
+    protected $table = 'homeworks';
+
     public function marks()
     {
         return $this->morphMany(Mark::class, 'markable');

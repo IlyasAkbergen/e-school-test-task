@@ -1,12 +1,20 @@
 ```
+Requirements:
+```
+- php 7.4
+
+```
 Instructions:
 ```
-- rename **Homestead.yaml.test to Homestead.yaml**
+- rename **Homestead.yaml.example to Homestead.yaml**
 - config folders in Homestead.yaml: change path to the project
 - rename .env.example and config bd
+- run *composer install*
+- add *192.168.10.10  e-school.test* in *hosts* file
 - run **vagrant up**(if installed Vagrant, VirtualBox, Homestead) 
 - run **vagrant ssh**
-- go to **/e-school-test-task**
+- go to **/code**
+- run **php artisan key:generate**
 - run **php artisan migrate**
 - run **php artisan db:seed**
 

@@ -14,7 +14,8 @@ class CreateMarkTypesTable extends Migration
     public function up()
     {
         Schema::create('mark_types', function (Blueprint $table) {
-            $table->unsignedTinyInteger('id', true);
+            $table->unsignedTinyInteger('id', false)
+                ->primary();
             $table->string('name');
             $table->timestamps();
         });
