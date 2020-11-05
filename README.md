@@ -15,6 +15,8 @@ Now api is available at e-school.test/api
 Docs at e-school.test/apidoc
 ``` 
 
+![ER-diagram](./resources/img/er-diagram.png)
+
 Дано:
 - класс - список учеников
 - расписание - список предметов за дату, в виде: дата, предмет, тип урока, ид урока, ид класса, четверть
