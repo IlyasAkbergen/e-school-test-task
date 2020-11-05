@@ -10,6 +10,10 @@ Instructions:
 - run **php artisan migrate**
 - run **php artisan db:seed**
 
+Optional
+- change *QUEUE_CONNECTION* in .env to *database*
+- run *php artisan config:cache*
+- run *php artisan queue:work --tries=3*
 ```
 Now api is available at e-school.test/api
 Docs at e-school.test/apidoc
