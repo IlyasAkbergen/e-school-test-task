@@ -15,8 +15,7 @@ Instructions:
 - run **vagrant ssh**
 - go to **/code**
 - run **php artisan key:generate**
-- run **php artisan migrate**
-- run **php artisan db:seed**
+- run **php artisan migrate:fresh --seed**
 - run **php artisan scribe:generate**
 
 Optional
