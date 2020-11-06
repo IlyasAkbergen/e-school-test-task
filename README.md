@@ -29,6 +29,8 @@ Docs at e-school.test/docs
 
 ![ER-diagram](./resources/img/er-diagram.png)
 
+![StartingProcess](./resources/img/workprocess.jpg)
+
 Дано:
 - класс - список учеников
 - расписание - список предметов за дату, в виде: дата, предмет, тип урока, ид урока, ид класса, четверть
