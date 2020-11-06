@@ -47,9 +47,15 @@ class MarksController extends ApiBaseController
      * @return \Illuminate\Http\JsonResponse|object
      */
     public function getMarksPerGroup(MarksPerGroupRequest $request) {
-        return $this->successResponse(
-            $this->marksService->getMarksPerGroup($request)
+//        DB::connection()->enableQueryLog();
+
+        $result = $this->marksService->getMarksPerGroup(
+            $request->group_id, $request->subject_id, $request->input('quarter', null)
         );
+
+//        dd(DB::getQueryLog());
+
+        return $this->successResponse($result);
     }
 
     /**
@@ -70,7 +76,9 @@ class MarksController extends ApiBaseController
      */
     function getMarksPerPupil(MarksPerPupilRequest $request) {
         return $this->successResponse(
-            $this->marksService->getMarksPerPupil($request)
+            $this->marksService->getMarksPerPupil(
+                ...$request->only(['user_id', 'quarter'])
+            )
         );
     }
 }

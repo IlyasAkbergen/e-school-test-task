@@ -8,7 +8,7 @@ use App\Http\Requests\Api\V1\Marks\MarksPerPupilRequest;
 
 interface MarksService
 {
-    public function getMarksPerGroup(MarksPerGroupRequest $request);
+    public function getMarksPerGroup($group_id, $subject_id, $quarter = null);
 
-    public function getMarksPerPupil(MarksPerPupilRequest $request);
+    public function getMarksPerPupil($user_id, $quarter = null);
 }

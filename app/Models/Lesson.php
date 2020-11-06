@@ -33,4 +33,9 @@ class Lesson extends Model
     {
        return $this->hasOne(Homework::class);
     }
+
+    public function lesson()
+    {
+        return $this;
+    }
 }
