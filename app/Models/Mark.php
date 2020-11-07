@@ -16,6 +16,6 @@ class Mark extends Model
 
     public function pupil()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

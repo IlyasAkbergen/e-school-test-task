@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\HasLesson;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Homework extends Model
 {
-    use HasFactory;
+    use HasFactory, HasLesson;
 
     protected $table = 'homeworks';
 
@@ -28,10 +29,5 @@ class Homework extends Model
                 'lesson_id',
                 'subject_id'
                 );
-    }
-
-    public function lesson()
-    {
-        return $this->belongsTo(Lesson::class);
     }
 }

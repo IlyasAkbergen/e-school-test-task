@@ -12,19 +12,23 @@ use App\Http\Controllers\ApiBaseController;
 use App\Http\Requests\Api\V1\Marks\MarksPerGroupRequest;
 use App\Http\Requests\Api\V1\Marks\MarksPerPupilRequest;
 use App\Services\v1\Marks\MarksService;
+use Illuminate\Cache\RateLimiter;
+use Illuminate\Support\Facades\DB;
 
 class MarksController extends ApiBaseController
 {
 
     protected $marksService;
 
+    private $limiter;
     /**
      * MarksController constructor.
      * @param MarksService $marksService
      */
-    public function __construct(MarksService $marksService)
+    public function __construct(MarksService $marksService, RateLimiter $limiter)
     {
         $this->marksService = $marksService;
+        $this->limiter = $limiter;
     }
 
     /**
@@ -50,7 +54,8 @@ class MarksController extends ApiBaseController
 //        DB::connection()->enableQueryLog();
 
         $result = $this->marksService->getMarksPerGroup(
-            $request->group_id, $request->subject_id, $request->input('quarter', null)
+            $request->group_id, $request->subject_id,
+            $request->input('quarter', null)
         );
 
 //        dd(DB::getQueryLog());

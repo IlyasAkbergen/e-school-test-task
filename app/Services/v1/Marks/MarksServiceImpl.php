@@ -4,22 +4,45 @@
 namespace App\Services\v1\Marks;
 
 
+use App\Http\Resources\MarkResource;
+use App\Models\Homework;
+use App\Models\Lesson;
 use App\Models\Mark;
 
 class MarksServiceImpl implements MarksService
 {
     public function getMarksPerGroup($group_id, $subject_id, $quarter = null) {
         $result = Mark::with([
-            'pupil', 'markable.subject'
-        ])->whereHas('markable.subject', function ($q) use ($subject_id, $quarter) {
-            return $q->where('id', $subject_id)
-                ->when(!empty($quarter), function ($query) use($quarter) {
-                    $query->where('quarter', $quarter);
-                });
-        })->whereHas('pupil', function ($q) use ($group_id) {
-            return $q->where('group_id', $group_id);
+            'pupil', 'markable.subject', 'markable.lesson'
+        ])
+        ->whereHasMorph('markable',
+            [Lesson::class, Homework::class],
+            function ($q, $type) use ($subject_id, $quarter) {
+                if ($type == Lesson::class) {
+                    $q->where('subject_id', $subject_id)
+                        ->when(!empty($quarter), function ($query) use ($quarter) {
+                            $query->where('quarter', $quarter);
+                        });
+                } else {
+                    $q->whereHas('subject', function ($query) use ($subject_id, $quarter) {
+                        $query->where('subjects.id', $subject_id);
+                    })
+                    ->when(!empty($quarter), function ($query) use ($quarter) {
+                        $query->whereHas('lesson', function ($q) use ($quarter) {
+                            $q->where('quarter', $quarter);
+                        });
+                    });
+                }
+            }
+        )
+        ->whereHas('pupil', function ($q) use ($group_id) {
+            $q->where('group_id', $group_id);
         })
-        ->get();
+        ->get()
+        ->groupBy('pupil.name')
+        ->map(function ($marks) {
+            return MarkResource::collection($marks);
+        });
 
         return $result;
     }

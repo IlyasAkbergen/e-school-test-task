@@ -16,6 +16,8 @@ Instructions:
 - go to **/code**
 - run **php artisan key:generate**
 - run **php artisan migrate:fresh --seed**
+- run **php artisan vendor:publish --provider="Knuckles\Scribe\ScribeServiceProvider" --tag=scribe-config**
+- run **php artisan config:cache**
 - run **php artisan scribe:generate**
 
 Optional
