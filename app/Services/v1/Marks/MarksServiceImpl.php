@@ -55,6 +55,36 @@ class MarksServiceImpl implements MarksService
     }
 
     public function getMarksPerPupil($user_id, $quarter = null) {
-        return 'success';
+        $result = Mark::with([
+            'pupil', 'markable.subject', 'markable.lesson'
+        ])
+            ->when(!empty($quarter), function ($query) use ($quarter) {
+                $query->whereHasMorph('markable',
+                    [Lesson::class, Homework::class],
+                    function ($q, $type) use ($quarter) {
+                        if ($type == Lesson::class) {
+                            $q->where('quarter', $quarter);
+                        } else {
+                            $q->whereHas('subject', function ($query) use ($quarter) {
+                                $query->where('quarter', $quarter);
+                            });
+                        }
+                    }
+                );
+            })
+            ->where('user_id', $user_id)
+            ->get()
+            ->sortBy(function ($item) {
+                return Carbon::parse(isset($item->markable->lesson)
+                    ? $item->markable->lesson->starts_at
+                    : $item->markable->starts_at
+                );
+            })
+            ->groupBy('markable.subject.name')
+            ->map(function ($marks) {
+                return MarkResource::collection($marks);
+            });
+
+        return $result;
     }
 }
