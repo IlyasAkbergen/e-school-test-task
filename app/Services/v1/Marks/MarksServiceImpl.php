@@ -8,6 +8,7 @@ use App\Http\Resources\MarkResource;
 use App\Models\Homework;
 use App\Models\Lesson;
 use App\Models\Mark;
+use Carbon\Carbon;
 
 class MarksServiceImpl implements MarksService
 {
@@ -39,6 +40,12 @@ class MarksServiceImpl implements MarksService
             $q->where('group_id', $group_id);
         })
         ->get()
+        ->sortBy(function ($item) {
+            return Carbon::parse(isset($item->markable->lesson)
+                ? $item->markable->lesson->starts_at
+                : $item->markable->starts_at
+            );
+        })
         ->groupBy('pupil.name')
         ->map(function ($marks) {
             return MarkResource::collection($marks);

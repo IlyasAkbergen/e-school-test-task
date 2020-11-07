@@ -80,10 +80,15 @@ class MarksController extends ApiBaseController
      * @return \Illuminate\Http\JsonResponse|object
      */
     function getMarksPerPupil(MarksPerPupilRequest $request) {
-        return $this->successResponse(
-            $this->marksService->getMarksPerPupil(
-                ...$request->only(['user_id', 'quarter'])
-            )
+        //        DB::connection()->enableQueryLog();
+
+        $result = $this->marksService->getMarksPerPupil(
+            $request->input('user_id'),
+            $request->input('quarter', null)
         );
+
+        //        dd(DB::getQueryLog());
+
+        return $this->successResponse($result);
     }
 }
