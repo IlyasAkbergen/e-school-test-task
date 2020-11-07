@@ -20,10 +20,6 @@ Instructions:
 - run **php artisan config:cache**
 - run **php artisan scribe:generate**
 
-Optional
-- change *QUEUE_CONNECTION* in .env to *database*
-- run *php artisan config:cache*
-- run *php artisan queue:work --tries=3*
 ```
 Now api is available at e-school.test/api/v1
 Docs at e-school.test/docs  (Можно поиграться с данными по эндпоинтам)
