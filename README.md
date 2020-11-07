@@ -26,8 +26,9 @@ Optional
 - run *php artisan queue:work --tries=3*
 ```
 Now api is available at e-school.test/api/v1
-Docs at e-school.test/docs
+Docs at e-school.test/docs  (Можно поиграться с данными по эндпоинтам)
 ``` 
+![ER-diagram](./resources/img/apidoc_sample.jpeg)
 
 ![ER-diagram](./resources/img/er-diagram.png)
 
